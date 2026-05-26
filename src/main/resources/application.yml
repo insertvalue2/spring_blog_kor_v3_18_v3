@@ -1,0 +1,30 @@
+spring:
+  profiles:
+    active:
+      - dev
+
+  # .env 파일을 properties 파일 형식으로 읽어라
+  # (배포 처럼 OS 환경 변수만 쓰는 환경에도 안전하게 지원)
+  #  optional 이기 때문에 .env 파일이 없어도 앱이 막히지 않습니다.
+  config:
+    import: optional:file:.env[.properties]
+
+# 초기 파리미터 설정
+# .env 파일에 설정된 변수 값이 여기에 매핑된다
+oauth:
+  kakao:
+    client-id: ${KAKAO_CLIENT_ID}
+    client-secret: ${KAKAO_CLIENT_SECRET}
+
+tenco:
+  key: ${TENCO_KEY}
+
+# 포트원(PortOne) V2 PG 결제 설정
+#  - store-id:    포트원 콘솔 > 연동 정보 의 상점 ID (프론트 공개값)
+#  - channel-key: 포트원 콘솔 > 연동 정보 > 채널 관리 의 채널 키 (프론트 공개값)
+#  - api-secret:  포트원 콘솔 > 연동 정보 > 식별코드·API Keys > V2 의 API Secret (서버 비밀값)
+#  - ":" 뒤 빈 기본값 → .env 에 값이 없어도 앱은 정상 기동됨 (단, 실제 결제 검증 시엔 값 필요)
+portone:
+  store-id: ${PORTONE_STORE_ID:}
+  channel-key: ${PORTONE_CHANNEL_KEY:}
+  api-secret: ${PORTONE_API_SECRET:}
